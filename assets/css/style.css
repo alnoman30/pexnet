@@ -542,6 +542,9 @@
   .max-w-152 {
     max-width: calc(var(--spacing) * 152);
   }
+  .max-w-152\.75 {
+    max-width: calc(var(--spacing) * 152.75);
+  }
   .max-w-184 {
     max-width: calc(var(--spacing) * 184);
   }
@@ -1230,6 +1233,10 @@
     --tw-leading: 120%;
     line-height: 120%;
   }
+  .leading-\[120\] {
+    --tw-leading: 120;
+    line-height: 120;
+  }
   .leading-\[130\%\] {
     --tw-leading: 130%;
     line-height: 130%;
@@ -1288,6 +1295,9 @@
   }
   .text-\[\#fff\] {
     color: #fff;
+  }
+  .text-\[88D1FF\] {
+    color: 88D1FF;
   }
   .text-primary {
     color: var(--color-primary);
@@ -2015,6 +2025,16 @@
   .md\:h-161\.5 {
     @media (width >= 48rem) {
       height: calc(var(--spacing) * 161.5);
+    }
+  }
+  .md\:h-180 {
+    @media (width >= 48rem) {
+      height: calc(var(--spacing) * 180);
+    }
+  }
+  .md\:h-180\.25 {
+    @media (width >= 48rem) {
+      height: calc(var(--spacing) * 180.25);
     }
   }
   .md\:h-188\.25 {
