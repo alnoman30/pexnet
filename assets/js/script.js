@@ -96,7 +96,80 @@ if (mobileServicesBtn && mobileServicesSubmenu) {
 
 
 // js by noman
-// Tab filter
+// Tab filter case study page
+function initFilterSystem(tabSelector, cardSelector) {
+  const buttons = document.querySelectorAll(tabSelector);
+  const cards = document.querySelectorAll(cardSelector);
+
+  if (!buttons.length || !cards.length) return;
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter;
+
+      // active state
+      buttons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const visibleCards = [];
+      const hiddenCards = [];
+
+      cards.forEach(card => {
+        const category = (card.dataset.category || "").split(" ");
+        const match = filter === "all" || category.includes(filter);
+
+        if (match) visibleCards.push(card);
+        else hiddenCards.push(card);
+      });
+
+      // fade out hidden
+      gsap.to(hiddenCards, {
+        opacity: 0,
+        y: 15,
+        scale: 0.98,
+        filter: "blur(10px)",
+        duration: 0.35,
+        ease: "power2.out",
+        stagger: 0.03,
+        onComplete: () => {
+          hiddenCards.forEach(c => (c.style.display = "none"));
+        }
+      });
+
+      // reveal next frame
+      requestAnimationFrame(() => {
+        visibleCards.forEach(card => {
+          card.style.display = "block";
+
+          gsap.set(card, {
+            opacity: 0,
+            y: 12,
+            scale: 0.98,
+            filter: "blur(10px)"
+          });
+        });
+
+        gsap.to(visibleCards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.05
+        });
+      });
+    });
+  });
+}
+
+/* INIT — only proven results now */
+document.addEventListener("DOMContentLoaded", () => {
+  initFilterSystem(".tab-btn-case", ".proven-result-card");
+});
+
+
+// Tab filter blog page
 function initFilterSystem(tabSelector, cardSelector) {
   const buttons = document.querySelectorAll(tabSelector);
   const cards = document.querySelectorAll(cardSelector);
@@ -110,61 +183,104 @@ function initFilterSystem(tabSelector, cardSelector) {
       buttons.forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
 
-      const visibleCards = [];
-      const hiddenCards = [];
+      const visible = [];
+      const hidden = [];
 
       cards.forEach(card => {
         const category = (card.dataset.category || "").split(" ");
         const match = filter === "all" || category.includes(filter);
 
-        if (match) {
-          visibleCards.push(card);
-        } else {
-          hiddenCards.push(card);
-        }
+        if (match) visible.push(card);
+        else hidden.push(card);
       });
 
-      // ❌ fade OUT first (slow & smooth)
-      gsap.to(hiddenCards, {
+
+      gsap.to(hidden, {
         opacity: 0,
-        y: 10,
+        y: 20,
         scale: 0.98,
-        duration: 0.4,
+        filter: "blur(10px)",
+        duration: 0.35,
         ease: "power2.out",
-        stagger: 0.03,
+        stagger: 0.02,
         onComplete: () => {
-          hiddenCards.forEach(c => (c.style.display = "none"));
+          hidden.forEach(el => {
+            el.style.display = "none";
+          });
+
+          revealVisible(visible);
         }
       });
 
-      // ⏳ small delay so layout doesn’t snap
-      setTimeout(() => {
-        visibleCards.forEach(card => {
-          card.style.display = "block";
-          gsap.set(card, { opacity: 0, y: 10 });
+      function revealVisible(items) {
+        items.forEach(el => {
+          el.style.display = "block";
         });
 
-        // ✅ fade IN smoothly
-        gsap.to(visibleCards, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.05
+        // force browser to recalc layout before animation
+        requestAnimationFrame(() => {
+          gsap.fromTo(
+            items,
+            {
+              opacity: 0,
+              y: 20,
+              scale: 0.98,
+              filter: "blur(10px)"
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 0.6,
+              ease: "power3.out",
+              stagger: 0.05,
+              clearProps: "filter"
+            }
+          );
         });
-      }, 200);
+      }
     });
   });
 }
 
-
-
 /* INIT */
 document.addEventListener("DOMContentLoaded", () => {
   initFilterSystem(".tab-btn-blog", ".blog-card");
-  initFilterSystem(".tab-btn-case", ".proven-result-wrap");
 });
 
+
+
+function initProvenCardAnimation() {
+  const cards = document.querySelectorAll(".proven-result-card");
+
+  if (!cards.length) return;
+
+  cards.forEach((card) => {
+    // initial state
+    gsap.set(card, {
+      opacity: 0,
+      y: 40,
+      filter: "blur(12px)"
+    });
+
+    gsap.to(card, {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+        toggleActions: "play none none none"
+      }
+    });
+  });
+}
+
+// init
+document.addEventListener("DOMContentLoaded", initProvenCardAnimation);
 
 // Filter section in team page
 document.addEventListener("DOMContentLoaded", () => {
