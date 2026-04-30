@@ -325,9 +325,9 @@ nav {
 }
 
 .common-cta > .cta-text span {
-    font-size: 16px;
-font-style: normal;
-font-weight: 700;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
   text-transform: uppercase;
   white-space: nowrap;
   display: block;
@@ -1072,7 +1072,8 @@ line-height: 150%;
 } */
 
 
-/* Case study pase css */
+/* NOMAN'CSS START HERE */
+/* Case study pase css () */
 .proven-result-wrap {
   will-change: transform, opacity;
 }
@@ -1097,12 +1098,16 @@ line-height: 150%;
     cursor: pointer;
     transition: all 0.3s ease;
 }
+.filter-sidebar {
+  will-change: transform;
+}
 
 .filter-btn.active {
     background: transparent;
     border: 2px solid #076AAB ;
 }
 
+/* NOMAN'CSS ENDS HERE */
 /*  */
 .footer-nav ul{
   display: flex;

@@ -95,7 +95,7 @@ if (mobileServicesBtn && mobileServicesSubmenu) {
 
 
 
-// js by noman
+// JAVASCRIPT BY NOMAN START FROM HERE
 // Tab filter case study page
 function initFilterSystem(tabSelector, cardSelector) {
   const buttons = document.querySelectorAll(tabSelector);
@@ -355,6 +355,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+// Career details page
+// progress fill animation
+  gsap.to(".progress-fill", {
+    width: "100%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".central-content-wrap",
+      start: "top top",
+      end: "bottom 40%",
+      scrub: true
+    }
+  });
+  document.querySelectorAll(".left-aside a").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const target = document.querySelector(link.getAttribute("href"));
+    if (!target) return;
+
+    lenis.scrollTo(target, {
+      offset: -100, // navbar height
+      duration: 1.2,
+      easing: (t) => 1 - Math.pow(1 - t, 3) // smooth ease
+    });
+  });
+});
+
+// JAVASCRIPT BY NOMAN ENDS HERE
 
 // ============================================
 // BANNER 
@@ -1389,5 +1419,4 @@ iconGroups.forEach((items, parent) => {
 
 
 
-
-console.log("JS is working ✅");
+// 
